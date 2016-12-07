@@ -6,11 +6,19 @@ plt.plot(boston.data[:,5], boston.target, 'o', label='Original data', markersize
 
 import numpy as np
 
-x = boston.data
 y = boston.target
+data = boston.data
 m = len(y)
+
+x = np.ones((m, len(data[0, :])+1))
+for i in range(len(y)):
+    x[i, :] = np.insert(data[i, :], 0, 1)
+    print(x[i, :])
+
+
+
 theta = np.zeros(len(x[0, :]))
-alpha = 0.1
+alpha = 0.00001
 num_iters = 400
 
 # x*theta
@@ -32,8 +40,8 @@ def gradient_descent(x, y, theta, alpha, num_iters):
         for j in range(n):
             s = 0
             for i in range(m):
-                print("xi{}".format(x[i,:]))
-                print(theta)
+                #print("xi{}".format(x[i,:]))
+                #print(theta)
                 h = np.dot(x[i,:], theta)
                 s += (h - y[i])*x[i][j]
             tmp[j] = theta[j] - (alpha * 1.0/m) * s
